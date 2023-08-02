@@ -79,18 +79,21 @@ const Main = (() => {
   return (
 
     <main className={styles.main}>
-      <h1 className={styles.title}>Welcome to your new app</h1>
+      <h1 className='text-2xl font-bold'>Welcome to VideoGPT</h1>
       <SignedIn>
-        <p className={styles.description}>You have successfully signed in</p>
+        <p className='text-xl mb-2'>What would you like to learn today?</p>
       </SignedIn>
       <SignedIn>
         <form onSubmit={onSubmit}>
           <input
             type="text"
             name="learn"
-            placeholder="Type something you want to learn"
+            // placeholder="Type something you want to learn"
+            tabIndex={0}
+            autoFocus
             value={queryInput}
             onChange={(e) => setQueryInput(e.target.value)}
+            className="min-w-[20rem] mb-2 text-3xl"
           />
           <input type="submit" value="Generate video" />
         </form>
@@ -101,53 +104,19 @@ const Main = (() => {
       </SignedOut>
 
       <div className={styles.cards}>
-        <SignedIn>
-          <div className={styles.card}>
-            <ClerkFeatures />
-          </div>
-        </SignedIn>
+
         <SignedOut>
           <div className={styles.card}>
             <SignupLink />
           </div>
         </SignedOut>
 
-        <div className={styles.card}>
-          <Link
-            href="https://dashboard.clerk.dev/last-active?utm_source=github&utm_medium=starter_repos&utm_campaign=nextjs_starter"
-            target="_blank"
-            rel="noopener"
-            className={styles.cardContent}
-          >
-            <img src="/icons/settings.svg" />
-            <div>
-              <h3>Configure settings for your app</h3>
-              <p>Visit Clerk to manage instances and configure settings for user management, theme, and more</p>
-            </div>
-            <div className={styles.arrow}>
-              <img src="/icons/arrow-right.svg" />
-            </div>
-          </Link>
-        </div>
+
       </div>
 
       <SignedIn>
         {/* <APIRequest /> */}
       </SignedIn>
-
-      <div className={styles.links}>
-        <Link
-          href="https://clerk.dev/docs?utm_source=github&utm_medium=starter_repos&utm_campaign=nextjs_starter"
-          target="_blank"
-          rel="noopener"
-          className={styles.link}
-        >
-          <span className={styles.linkText}>Read Clerk documentation</span>
-        </Link>
-        <Link href="https://nextjs.org/docs" target="_blank" rel="noopener" className={styles.link}>
-          <span className={styles.linkText}>Read NextJS documentation</span>
-        </Link>
-      </div>
     </main>
   )
 });
