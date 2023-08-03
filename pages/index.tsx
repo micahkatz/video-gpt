@@ -2,10 +2,11 @@ import styles from "/styles/Shared.module.css";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import React, { useState } from "react";
 import Link from "next/link";
-import {
-  useMutation,
-  useQuery
-} from 'react-query';
+import { useMutation, useQuery } from "react-query";
+import InQueue from "../components/InQueue";
+import LandingPage from "../components/LandingPage";
+import Header from "../components/Header";
+import Layout from "../components/Layout";
 const ClerkFeatures = () => (
   <Link href="/user" className={styles.cardContent}>
     <img alt="Explore Clerk components" src="/icons/layout.svg" />
@@ -17,7 +18,7 @@ const ClerkFeatures = () => (
       <img src="/icons/arrow-right.svg" />
     </div>
   </Link>
-)
+);
 
 const SignupLink = () => (
   <Link href="/sign-up" className={styles.cardContent}>
@@ -51,11 +52,10 @@ export default function handler(req, res) {
 // depending on whether or not a visitor is signed in.
 //
 // https://clerk.dev/docs/component-reference/signed-in
-const Main = (() => {
+const Main = () => {
   const [queryInput, setQueryInput] = useState("");
   const [result, setResult] = useState();
-  const addToQueueMutation = useMutation(addToQueue)
-
+  const addToQueueMutation = useMutation(addToQueue);
 
   async function addToQueue(event) {
     // event.preventDefault();
@@ -73,47 +73,63 @@ const Main = (() => {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      return data.result
+      return data.result;
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
-      return error
+      return error;
     }
   }
   return (
     <>
-      {/* <h1 className='text-2xl font-bold'>Welcome to VideoGPT</h1> */}
       <SignedIn>
-        <main className='max-w-3xl p-8 flex flex-col items-center flex-1 justify-center'>
-          <p className='text-text text-2xl font-bold mb-8'>What would you like to learn today?</p>
-          <input
-            type="text"
-            name="learn"
-            autoComplete="off"
-            // placeholder="Example: How to tie a tie"
-            tabIndex={0}
-            autoFocus
-            value={queryInput}
-            onChange={(e) => setQueryInput(e.target.value)}
-            className="mb-8 text-3xl border-none outline-none text-center bg-primary-200 rounded-xl"
-          />
-          <button onClick={addToQueueMutation.mutate} disabled={queryInput.length <= 0} type="button" className="cursor-pointer transition-all text-white bg-gradient-to-br from-secondaryAccent to-accent hover:shadow-xl hover:shadow-primary hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 disabled:opacity-50">Generate Video</button>
-          {addToQueueMutation.isLoading && <p>Loading...</p>}
-          {/* <input type="submit" value="Generate video" /> */}
-          {addToQueueMutation.data && <div className={styles.result}>{addToQueueMutation.data}</div>}
-        </main>
+        <Layout className="justify-center">
+          {true ? (
+            <>
+              <p className="text-text text-2xl font-bold mb-8">What would you like to learn today?</p>
+              <input
+                type="text"
+                name="learn"
+                autoComplete="off"
+                // placeholder="Example: How to tie a tie"
+                tabIndex={0}
+                autoFocus
+                value={queryInput}
+                onChange={(e) => setQueryInput(e.target.value)}
+                className="mb-8 text-3xl border-none outline-none text-center w-fit bg-primary-200 py-2 px-4 rounded-xl"
+              />
+              <button
+                onClick={addToQueueMutation.mutate}
+                disabled={queryInput.length <= 0}
+                type="button"
+                className="cursor-pointer transition-all text-white bg-gradient-to-br from-secondaryAccent to-accent hover:shadow-xl hover:shadow-primary hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 disabled:opacity-50"
+              >
+                Generate Video
+              </button>
+              {addToQueueMutation.isLoading && <p>Loading...</p>}
+              {/* <input type="submit" value="Generate video" /> */}
+              {addToQueueMutation.data && <div className={styles.result}>{addToQueueMutation.data}</div>}
+            </>
+          ) : (
+            <>
+              <InQueue query={"How to tie a tie"} />
+            </>
+          )}
+        </Layout>
+
+        <Footer />
       </SignedIn>
       <SignedOut>
-        <p className={styles.description}>Sign up for an account to get started</p>
+        <LandingPage />
       </SignedOut>
     </>
-  )
-});
+  );
+};
 
 // Footer component
 const Footer = () => (
-  <footer className={styles.footer}>
+  <footer className="flex mx-16 justify-center items-center">
     Powered by{" "}
     {/* <a
       href="https://clerk.dev?utm_source=github&utm_medium=starter_repos&utm_campaign=nextjs_starter"
@@ -128,12 +144,4 @@ const Footer = () => (
     </a>
   </footer>
 );
-
-const Home = () => (
-  <div className={styles.container}>
-    <Main />
-    <Footer />
-  </div>
-);
-
-export default Home;
+export default Main;

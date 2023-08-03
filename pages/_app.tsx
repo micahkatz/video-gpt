@@ -19,9 +19,7 @@ const MyApp = ({ Component, pageProps }) => {
         </Head>
         <Script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js" />
         <Script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js" />
-        <Layout>
           <Component {...pageProps} />
-        </Layout>
       </ClerkProvider>
     </QueryClientProvider>
   );

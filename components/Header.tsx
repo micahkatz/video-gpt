@@ -22,7 +22,7 @@ const Header = () => (
     </div>
     <div className={styles.right}>
       <SignedOut>
-        <Link href="/sign-in" className='text-primary font-bold'>Sign in</Link>
+        {/* <Link href="/sign-in" className='text-primary font-bold'>Sign in</Link> */}
       </SignedOut>
       <SignedIn>
         <UsesLeft />

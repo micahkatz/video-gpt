@@ -1,10 +1,11 @@
 import styles from "/styles/Shared.module.css";
 import Header from "./Header";
-
-const Layout = ({ children }) => (
+import { twMerge } from "tailwind-merge";
+type Props = { children: React.ReactNode, className?: string }
+const Layout = (props: Props) => (
   <>
     <Header />
-    <main className={styles.container}>{children}</main>
+    <main className={twMerge(styles.container, props.className)}>{props.children}</main>
   </>
 );
 
