@@ -5,7 +5,7 @@
 html,
 body {
   @apply bg-background;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Helvetica Neue';
   font-size: 16px;
   font-weight: 400;
   line-height: 20px;
