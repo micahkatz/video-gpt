@@ -5,7 +5,7 @@ import Head from "next/head";
 
 import Script from "next/script";
 import { QueryClientProvider, QueryClient } from "react-query";
-import Layout from "/components/Layout";
+import Layout from "../components/Layout";
 const queryClient = new QueryClient();
 const MyApp = ({ Component, pageProps }) => {
   return (

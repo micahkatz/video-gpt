@@ -29,7 +29,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse<GetVide
       sqs.getQueueAttributes(
         {
           QueueUrl: process.env.SQS_URL,
-          AttributeNames: ["ApproximateNumberOfMessages"],
+          AttributeNames: ["All"],
           //   MessageGroupId: "default",
           //   MessageDeduplicationId: "default",
         },

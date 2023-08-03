@@ -2,7 +2,10 @@ import styles from "/styles/Shared.module.css";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import React, { useState } from "react";
 import Link from "next/link";
-
+import {
+  useMutation,
+  useQuery
+} from 'react-query';
 const ClerkFeatures = () => (
   <Link href="/user" className={styles.cardContent}>
     <img alt="Explore Clerk components" src="/icons/layout.svg" />
@@ -51,9 +54,11 @@ export default function handler(req, res) {
 const Main = (() => {
   const [queryInput, setQueryInput] = useState("");
   const [result, setResult] = useState();
+  const addToQueueMutation = useMutation(addToQueue)
 
-  async function onSubmit(event) {
-    event.preventDefault();
+
+  async function addToQueue(event) {
+    // event.preventDefault();
     try {
       const response = await fetch("/api/queue", {
         method: "POST",
@@ -68,56 +73,41 @@ const Main = (() => {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      setResult(data.result);
-      setQueryInput("");
+      return data.result
     } catch (error) {
       // Consider implementing your own error handling logic here
       console.error(error);
       alert(error.message);
+      return error
     }
   }
   return (
-
-    <main className={styles.main}>
-      <h1 className='text-2xl font-bold'>Welcome to VideoGPT</h1>
+    <>
+      {/* <h1 className='text-2xl font-bold'>Welcome to VideoGPT</h1> */}
       <SignedIn>
-        <p className='text-xl mb-2'>What would you like to learn today?</p>
-      </SignedIn>
-      <SignedIn>
-        <form onSubmit={onSubmit}>
+        <main className='max-w-3xl p-8 flex flex-col items-center flex-1 justify-center'>
+          <p className='text-text text-2xl font-bold mb-8'>What would you like to learn today?</p>
           <input
             type="text"
             name="learn"
-            // placeholder="Type something you want to learn"
+            autoComplete="off"
+            // placeholder="Example: How to tie a tie"
             tabIndex={0}
             autoFocus
             value={queryInput}
             onChange={(e) => setQueryInput(e.target.value)}
-            className="min-w-[20rem] mb-2 text-3xl"
+            className="mb-8 text-3xl border-none outline-none text-center bg-transparent"
           />
-          <input type="submit" value="Generate video" />
-        </form>
-        <div className={styles.result}>{result}</div>
+          <button onClick={addToQueueMutation.mutate} disabled={queryInput.length <= 0} type="button" className="cursor-pointer transition-all text-white bg-gradient-to-br from-[#BB447A] to-accent hover:shadow-xl hover:shadow-primary hover:scale-105 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2 disabled:opacity-50">Generate Video</button>
+          {addToQueueMutation.isLoading && <p>Loading...</p>}
+          {/* <input type="submit" value="Generate video" /> */}
+          {addToQueueMutation.data && <div className={styles.result}>{addToQueueMutation.data}</div>}
+        </main>
       </SignedIn>
       <SignedOut>
         <p className={styles.description}>Sign up for an account to get started</p>
       </SignedOut>
-
-      <div className={styles.cards}>
-
-        <SignedOut>
-          <div className={styles.card}>
-            <SignupLink />
-          </div>
-        </SignedOut>
-
-
-      </div>
-
-      <SignedIn>
-        {/* <APIRequest /> */}
-      </SignedIn>
-    </main>
+    </>
   )
 });
 
@@ -125,14 +115,14 @@ const Main = (() => {
 const Footer = () => (
   <footer className={styles.footer}>
     Powered by{" "}
-    <a
+    {/* <a
       href="https://clerk.dev?utm_source=github&utm_medium=starter_repos&utm_campaign=nextjs_starter"
       target="_blank"
       rel="noopener"
     >
       <img src="/clerk.svg" alt="Clerk" className={styles.logo} />
     </a>
-    +
+    + */}
     <a href="https://nextjs.org/" target="_blank" rel="noopener">
       <img src="/nextjs.svg" alt="Next.js" className={styles.logo} />
     </a>
