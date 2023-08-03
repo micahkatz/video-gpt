@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Logo from "./Logo";
 import UsesLeft from "./UsesLeft";
+import { twMerge } from "tailwind-merge";
 
 // Header component using <SignedIn> & <SignedOut>.
 //
@@ -11,8 +12,11 @@ import UsesLeft from "./UsesLeft";
 // on whether or not a visitor is signed in.
 //
 // https://docs.clerk.dev/frontend/react/signedin-and-signedout
-const Header = () => (
-  <header className={styles.header}>
+type Props = {
+  className?: string;
+}
+const Header = (props: Props) => (
+  <header className={twMerge(styles.header, props.className)}>
     <div className={styles.left}>
       <Link href="/" className={styles.logo}>
         {/* <Image className='fill-primary' src="/logo.svg" width="32" height="32" alt="Logo" /> */}
