@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Logo from "./Logo";
+import UsesLeft from "./UsesLeft";
 
 // Header component using <SignedIn> & <SignedOut>.
 //
@@ -24,6 +25,7 @@ const Header = () => (
         <Link href="/sign-in" className='text-primary font-bold'>Sign in</Link>
       </SignedOut>
       <SignedIn>
+        <UsesLeft />
         <UserButton
           userProfileMode="navigation"
           userProfileUrl="/user"
