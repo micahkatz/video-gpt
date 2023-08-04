@@ -54,7 +54,7 @@ export default function handler(req, res) {
 // https://clerk.dev/docs/component-reference/signed-in
 const Main = () => {
   const [queryInput, setQueryInput] = useState("");
-  const [result, setResult] = useState();
+  const [isProcessingInBackground, setIsProcessingInBackground] = useState(false);
   const addToQueueMutation = useMutation(addToQueue);
 
   async function addToQueue(event) {
@@ -73,6 +73,8 @@ const Main = () => {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
+      setIsProcessingInBackground(true)
+
       return data.result;
     } catch (error) {
       // Consider implementing your own error handling logic here
@@ -85,7 +87,7 @@ const Main = () => {
     <>
       <SignedIn>
         <Layout className="justify-center">
-          {false ? (
+          {!isProcessingInBackground ? (
             <>
               <p className="text-text text-2xl font-bold mb-8">What would you like to learn today?</p>
               <input
@@ -113,7 +115,7 @@ const Main = () => {
             </>
           ) : (
             <>
-              <InQueue query={queryInput} />
+              <InQueue query={queryInput} setIsProcessingInBackground={setIsProcessingInBackground} />
             </>
           )}
         </Layout>
