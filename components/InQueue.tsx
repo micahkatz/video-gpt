@@ -11,8 +11,23 @@ type Props = {
 const InQueue = (props: Props) => {
       const { user } = useUser();
     const [lastVideo, setLastVideo] = useState(user.publicMetadata?.lastVideo)
+    const [progress, setProgress] = useState(0)
     const router = useRouter()
+    const secondsToEnd = 180
+    const msToEnd = 1000 * secondsToEnd
+    const totalIntervals = 100
+    useEffect(() => {
+        var currInterval = 0
+        const interval = setInterval(() => {
+            setProgress(prev => (currInterval / totalIntervals))
+            if(currInterval >= totalIntervals) {
+                return
+            }
+            currInterval++
+        }, msToEnd / totalIntervals);
 
+        return () => clearInterval(interval)
+    },[])
     useEffect(() => {
         if(user){
             console.log(user.publicMetadata)
@@ -33,10 +48,10 @@ const InQueue = (props: Props) => {
             <p className='text-text text-6xl font-bold mb-8'>Generating Video</p>
             <GradientText className='text-3xl mb-8'>{props.query || 'How to tie a tie'}</GradientText>
             <div className="w-96 mb-5 h-4 overflow-hidden rounded-full bg-primary-200">
-                <div className="transition-all h-4 animate-pulse rounded-full bg-gradient-to-br from-accent to-secondaryAccent" style={{ width: '90%' }}/>
+                <div className="transition-all duration-1000 h-4 animate-pulse rounded-full bg-gradient-to-br from-accent to-secondaryAccent" style={{ width: `${progress * 100}%` }}/>
             </div>
             {/* <p className='text-text text-2xl mb-2'>Your Spot in the Queue</p>
-            <p className='text-text text-2xl font-bold mb-8'>8/22</p> */}
+             */}
             <button onClick={() => props.setIsProcessingInBackground(false)} type="button" className="text-white bg-primary-950 py-2 px-4 rounded-lg mb-2 hover:scale-105">Try Again</button>
 
         </div>
