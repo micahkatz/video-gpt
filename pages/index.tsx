@@ -85,7 +85,7 @@ const Main = () => {
     <>
       <SignedIn>
         <Layout className="justify-center">
-          {true ? (
+          {false ? (
             <>
               <p className="text-text text-2xl font-bold mb-8">What would you like to learn today?</p>
               <input
