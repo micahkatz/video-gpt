@@ -113,7 +113,7 @@ const Main = () => {
             </>
           ) : (
             <>
-              <InQueue query={"How to tie a tie"} />
+              <InQueue query={queryInput} />
             </>
           )}
         </Layout>
