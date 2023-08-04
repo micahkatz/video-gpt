@@ -12,7 +12,7 @@ const MyApp = ({ Component, pageProps }) => {
     <QueryClientProvider client={queryClient}>
       <ClerkProvider {...pageProps}>
         <Head>
-          <title>Clerk + Next.js Starter</title>
+          <title>Scratch AI</title>
           <link rel="icon" href="/favicon.ico" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism.css" rel="stylesheet" />
