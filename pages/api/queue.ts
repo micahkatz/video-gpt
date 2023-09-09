@@ -45,20 +45,13 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Generat
     await new Promise((resolve, reject) => {
       sqs.sendMessage(params, function (err, data) {
         if (err) {
-          console.log("Error", err);
+          console.error("Error", err);
           reject(err);
         } else {
           console.log("Success", data.MessageId);
           resolve(data.MessageId);
         }
       });
-    });
-    
-    await clerkClient.users.updateUser(userId, {
-      publicMetadata: {
-        ...publicMetadata,
-        numTimesUsed: (publicMetadata?.numTimesUsed || 0) + 1,
-      },
     });
 
     res.status(200).json({});
