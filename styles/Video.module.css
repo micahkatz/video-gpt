@@ -1,0 +1,5 @@
+.reactPlayer video {
+  @apply rounded-lg;
+  height: auto !important;
+}
+

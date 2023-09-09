@@ -7,54 +7,10 @@ import InQueue from "../components/InQueue";
 import LandingPage from "../components/LandingPage";
 import Header from "../components/Header";
 import Layout from "../components/Layout";
-const ClerkFeatures = () => (
-  <Link href="/user" className={styles.cardContent}>
-    <img alt="Explore Clerk components" src="/icons/layout.svg" />
-    <div>
-      <h3>Explore features provided by Clerk</h3>
-      <p>Interact with the user button, user profile, and more to preview what your users will see</p>
-    </div>
-    <div className={styles.arrow}>
-      <img src="/icons/arrow-right.svg" />
-    </div>
-  </Link>
-);
 
-const SignupLink = () => (
-  <Link href="/sign-up" className={styles.cardContent}>
-    <img alt="Sign up" src="/icons/user-plus.svg" />
-    <div>
-      <h3>Sign up for an account</h3>
-      <p>Sign up and sign in to explore all the features provided by Clerk out-of-the-box</p>
-    </div>
-    <div className={styles.arrow}>
-      <img src="/icons/arrow-right.svg" />
-    </div>
-  </Link>
-);
-
-const apiSample = `
-import { getAuth } from "@clerk/nextjs/server";
-
-export default function handler(req, res) {
-  const { sessionId, userId } = getAuth(req);
-
-  if (!sessionId) {
-    return res.status(401).json({ id: null });
-  }
-  return res.status(200).json({ id: userId });
-};
-`.trim();
-
-// Main component using <SignedIn> and <SignedOut>.
-//
-// The SignedIn and SignedOut components are used to control rendering
-// depending on whether or not a visitor is signed in.
-//
-// https://clerk.dev/docs/component-reference/signed-in
 const Main = () => {
   const [queryInput, setQueryInput] = useState("");
-  const [result, setResult] = useState();
+  const [isProcessingInBackground, setIsProcessingInBackground] = useState(false);
   const addToQueueMutation = useMutation(addToQueue);
 
   async function addToQueue(event) {
@@ -73,6 +29,8 @@ const Main = () => {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
+      setIsProcessingInBackground(true)
+
       return data.result;
     } catch (error) {
       // Consider implementing your own error handling logic here
@@ -85,7 +43,7 @@ const Main = () => {
     <>
       <SignedIn>
         <Layout className="justify-center">
-          {true ? (
+          {!isProcessingInBackground ? (
             <>
               <p className="text-text text-2xl font-bold mb-8">What would you like to learn today?</p>
               <input
@@ -113,7 +71,7 @@ const Main = () => {
             </>
           ) : (
             <>
-              <InQueue query={"How to tie a tie"} />
+              <InQueue query={queryInput} setIsProcessingInBackground={setIsProcessingInBackground} />
             </>
           )}
         </Layout>
@@ -127,7 +85,6 @@ const Main = () => {
   );
 };
 
-// Footer component
 const Footer = () => (
   <footer className="flex mx-16 justify-center items-center">
     Powered by{" "}
