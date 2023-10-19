@@ -76,7 +76,7 @@ const Main = () => {
           )}
         </Layout>
 
-        <Footer />
+        {/* <Footer /> */}
       </SignedIn>
       <SignedOut>
         <LandingPage />
