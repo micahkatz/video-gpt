@@ -29,7 +29,7 @@ const Header = (props: Props) => (
     <div className={styles.right}>
       <SignedOut>{/* <Link href="/sign-in" className='text-primary font-bold'>Sign in</Link> */}</SignedOut>
       <SignedIn>
-        <UsesLeft />
+        {/* <UsesLeft /> */}
         <Link href="/user/apikeys">
           <MdKey size={25} color={"#5b2786"} />
         </Link>
