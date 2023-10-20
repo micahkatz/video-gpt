@@ -5,6 +5,8 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Logo from "./Logo";
 import UsesLeft from "./UsesLeft";
 import { twMerge } from "tailwind-merge";
+import { MdKey } from "react-icons/md";
+ 'react-icons/fi'
 
 // Header component using <SignedIn> & <SignedOut>.
 //
@@ -21,15 +23,16 @@ const Header = (props: Props) => (
       <Link href="/" className={styles.logo}>
         {/* <Image className='fill-primary' src="/logo.svg" width="32" height="32" alt="Logo" /> */}
         <Logo />
-        <span className='ml-3 font-bold text-primary'>Scratch AI</span>
+        <span className="ml-3 font-bold text-primary">Scratch AI</span>
       </Link>
     </div>
     <div className={styles.right}>
-      <SignedOut>
-        {/* <Link href="/sign-in" className='text-primary font-bold'>Sign in</Link> */}
-      </SignedOut>
+      <SignedOut>{/* <Link href="/sign-in" className='text-primary font-bold'>Sign in</Link> */}</SignedOut>
       <SignedIn>
-        <UsesLeft />
+        {/* <UsesLeft /> */}
+        <Link href="/user/apikeys">
+          <MdKey size={25} color={"#5b2786"} />
+        </Link>
         <UserButton
           userProfileMode="navigation"
           userProfileUrl="/user"
