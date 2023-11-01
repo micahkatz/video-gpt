@@ -21,8 +21,8 @@ const latestVideo = (props: Props) => {
       staleTime: 72000000,
     });
     return (
-        <Layout className='flex flex-1 items-center justify-center w-screen'>
-            <Video url={query.data} className='mt-2 h-screen' width={'calc(100vw - 4rem)'} />
+        <Layout className='flex items-center w-screen'>
+            <Video url={query.data} className='mt-2' width={'calc(100vw - 4rem)'} />
         </Layout>
     )
 }
