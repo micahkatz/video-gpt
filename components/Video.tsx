@@ -18,10 +18,10 @@ const Video = (props: Props) => {
             className={twMerge(styles.reactPlayer, "mb-2")}
             {...withoutClassName}
             volume={0.25}
-            stopOnUnmount
-            playing
+            stopOnUnmount={false}
+            playing={false}
             controls
-            muted={muted}
+            muted={false}
           />
           {/* {!muted ? (
             <PiSpeakerSimpleHighDuotone onClick={() => setMuted(true)} className="cursor-pointer hover:scale-105" />
