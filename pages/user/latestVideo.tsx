@@ -15,11 +15,11 @@ const latestVideo = (props: Props) => {
 
         const response = await axios.get('/api/getLatestVideo')
 
-        console.log(response.data)
-
         return response.data?.url
     }
-    const query = useQuery('video', getVideo)
+    const query = useQuery("video", getVideo, {
+      staleTime: 72000000,
+    });
     return (
         <Layout className='flex flex-1 items-center justify-center w-screen'>
             <Video url={query.data} className='mt-2 h-screen' width={'calc(100vw - 4rem)'} />
